@@ -1,4 +1,52 @@
 
+// pipeline {
+//     agent any
+
+//     tools {
+//         nodejs 'NodeJS-22'
+//     }
+
+//     stages {
+
+//         stage('Clone') {
+//             steps {
+//                 echo 'Cloning repository...'
+//                 git branch: 'main',
+//                     url: 'https://github.com/OletiSatishKumar/Tourism.git'
+//             }
+//         }
+
+//         stage('Check Node') {
+//             steps {
+//                 sh 'node --version'
+//                 sh 'npm --version'
+//             }
+//         }
+
+//         stage('Install Dependencies') {
+//             steps {
+//                 sh 'npm install'
+//             }
+//         }
+
+//         stage('Build') {
+//             steps {
+//                 sh 'npm run build'
+//             }
+//         }
+
+//         stage('Test') {
+//             steps {
+//                 sh 'npm run test'
+//             }
+//         }
+//     }
+// }
+
+
+
+
+
 pipeline {
     agent any
 
@@ -7,37 +55,19 @@ pipeline {
     }
 
     stages {
-
-        stage('Clone') {
+        stage('NodeJS Verification') {
             steps {
-                echo 'Cloning repository...'
-                git branch: 'main',
-                    url: 'https://github.com/OletiSatishKumar/Tourism.git'
-            }
-        }
+                sh '''
+                    echo "Checking NodeJS..."
+                    node -v
 
-        stage('Check Node') {
-            steps {
-                sh 'node --version'
-                sh 'npm --version'
-            }
-        }
+                    echo "Checking NPM..."
+                    npm -v
 
-        stage('Install Dependencies') {
-            steps {
-                sh 'npm install'
-            }
-        }
-
-        stage('Build') {
-            steps {
-                sh 'npm run build'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                sh 'npm run test'
+                    echo "Checking installation path..."
+                    which node
+                    which npm
+                '''
             }
         }
     }
