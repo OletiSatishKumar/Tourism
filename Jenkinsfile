@@ -2,33 +2,41 @@
 pipeline {
     agent any
 
+    tools {
+        nodejs 'NodeJS-22'
+    }
+
     stages {
 
         stage('Clone') {
             steps {
-                echo 'Cloning the code...'
+                echo 'Cloning repository...'
                 git branch: 'main',
                     url: 'https://github.com/OletiSatishKumar/Tourism.git'
             }
         }
 
+        stage('Check Node') {
+            steps {
+                sh 'node --version'
+                sh 'npm --version'
+            }
+        }
+
         stage('Install Dependencies') {
             steps {
-                echo 'Installing dependencies...'
                 sh 'npm install'
             }
         }
 
         stage('Build') {
             steps {
-                echo 'Building the application...'
                 sh 'npm run build'
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Running tests...'
                 sh 'npm run test'
             }
         }
